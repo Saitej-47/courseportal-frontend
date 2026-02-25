@@ -1,0 +1,94 @@
+.admin-container {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+}
+
+.sidebar {
+  width: 230px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ⭐ Sidebar branding */
+.sidebarTop{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin-bottom:28px;
+  padding:15px 10px 22px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  background: radial-gradient(circle at center, rgba(99,102,241,0.15), transparent 70%);
+  border-radius:14px;
+}
+
+/* 🔥 Bigger glowing logo */
+.adminLogo{
+  width:170px;        /* 🔥 bigger */
+  max-width:100%;
+  object-fit:contain;
+  filter: drop-shadow(0 0 18px rgba(99,102,241,0.7));
+  transition:0.3s;
+}
+
+/* subtle hover scale */
+.adminLogo:hover{
+  transform:scale(1.05);
+}
+
+/* Admin text */
+.adminTitle{
+  margin-top:6px;
+  font-size:15px;
+  color:#cbd5f5;
+  letter-spacing:2px;
+  font-weight:700;
+  text-align:center;
+}
+
+/* Sidebar links */
+.sidebar a {
+  text-decoration: none;
+  color: #cbd5f5;
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.sidebar a.active {
+  background: #6366f1;
+  color: white;
+  box-shadow: 0 0 12px rgba(99,102,241,0.4);
+}
+
+/* Logout button */
+.logoutBtn {
+  margin-top: auto;
+  padding: 10px;
+  border: none;
+  background: #ef4444;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.logoutBtn:hover{
+  background:#dc2626;
+}
+
+.content {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+}
+

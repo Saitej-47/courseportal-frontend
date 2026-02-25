@@ -1,0 +1,85 @@
+.time-wrapper{
+  padding:30px;
+  color:white;
+  min-height:100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
+}
+
+.time-title{
+  font-size:28px;
+  margin-bottom:20px;
+  background:linear-gradient(90deg,#8b5cf6,#6366f1);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* GRID */
+.time-grid{
+  display:grid;
+  grid-template-columns:120px repeat(5,1fr);
+  border-radius:20px;
+  overflow:hidden;
+  backdrop-filter:blur(15px);
+  background:#0f172a;   /* ⭐ darker grid bg */
+}
+
+/* HEADERS */
+.grid-header{
+  background:#6366f1;
+  padding:12px;
+  text-align:center;
+  font-weight:bold;
+}
+
+/* TIME COLUMN */
+.grid-time{
+  background:#1e293b;
+  padding:12px;
+  text-align:center;
+  font-weight:500;
+}
+
+/* CELLS */
+.grid-cell{
+  min-height:80px;
+  padding:10px;
+  border:1px solid rgba(255,255,255,0.05);
+  background:#1e293b;   /* ⭐ darker empty cells */
+  backdrop-filter:blur(10px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  transition:0.3s;
+  color:white;
+}
+
+/* HOVER */
+.grid-cell:hover{
+  background:#334155;
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(139,92,246,0.5);
+}
+
+/* COURSE BLOCK */
+.grid-cell div{
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  padding:6px 10px;
+  border-radius:8px;
+  margin:3px 0;
+  width:95%;
+  text-align:center;
+  color:white;
+  font-weight:500;
+}
+
+/* FACULTY TEXT */
+.grid-cell small{
+  opacity:0.9;
+  font-size:11px;
+}
+
+/* EMPTY TEXT */
+.empty{
+  opacity:0.8;
+}

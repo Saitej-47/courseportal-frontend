@@ -1,0 +1,109 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* WRAPPER */
+.login-wrapper {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  position: relative;
+  overflow: hidden;   /* 🔥 prevents white gap */
+}
+
+
+/* 🔥 LOGO (animation + glow untouched) */
+.portal-logo{
+  width: 340px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 25px rgba(255,255,255,0.8));
+  animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo{
+  0%{ transform: translateY(0px);}
+  50%{ transform: translateY(-8px);}
+  100%{ transform: translateY(0px);}
+}
+
+/* GLASS CARD */
+.glass-card {
+  width: 380px;
+  min-height: 430px;
+  padding: 50px 40px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  text-align: center;
+
+  transform: translateY(-70px);   /* 🔥 extra upward shift */
+  animation: fadeIn 0.7s ease;
+}
+
+@keyframes fadeIn{
+  from{ opacity:0; transform: translateY(-30px);}
+  to{ opacity:1; transform: translateY(-70px);}
+}
+
+/* LOGIN TITLE */
+.glass-card h2 {
+  color: white;
+  margin-bottom: 25px;
+  font-size: 26px;
+}
+
+/* INPUTS */
+.glass-card input {
+  width: 100%;
+  padding: 13px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: rgba(255,255,255,0.9);
+}
+
+/* BUTTON */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* REGISTER TEXT */
+.register-text {
+  margin-top: 20px;
+  color: white;
+}
+
+.register-link {
+  color: #00d4ff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.register-link:hover{
+  text-decoration: underline;
+}

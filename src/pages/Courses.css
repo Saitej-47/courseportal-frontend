@@ -1,0 +1,28 @@
+.faculty-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.faculty-item {
+  font-size: 13px;
+  opacity: 0.9;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  transition: all 0.2s ease;
+}
+
+/* ⭐ hover effect */
+.faculty-item:hover {
+  background: rgba(139, 92, 246, 0.2);
+  transform: translateX(3px);
+}
+.courses-page {
+  min-height: 100vh;
+  padding: 30px;
+  color: white;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+}
