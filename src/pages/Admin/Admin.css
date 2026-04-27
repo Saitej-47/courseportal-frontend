@@ -1,94 +1,428 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  background: #060610;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ─── LAYOUT ─────────────────────────────────────────────── */
 .admin-container {
   display: flex;
   height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  color: white;
+  background: #060610;
+  color: #e2e8f0;
+  overflow: hidden;
 }
 
+/* ─── SIDEBAR ─────────────────────────────────────────────── */
 .sidebar {
   width: 230px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  padding: 20px;
+  min-width: 230px;
+  background: #08091a;
+  border-right: 1px solid rgba(255,255,255,.06);
+  padding: 22px 14px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 2px;
+  flex-shrink: 0;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
-/* ⭐ Sidebar branding */
-.sidebarTop{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  margin-bottom:28px;
-  padding:15px 10px 22px;
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  background: radial-gradient(circle at center, rgba(99,102,241,0.15), transparent 70%);
-  border-radius:14px;
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(226,172,90,.07) 0%, transparent 70%);
+  pointer-events: none;
 }
 
-/* 🔥 Bigger glowing logo */
-.adminLogo{
-  width:170px;        /* 🔥 bigger */
-  max-width:100%;
-  object-fit:contain;
-  filter: drop-shadow(0 0 18px rgba(99,102,241,0.7));
-  transition:0.3s;
+.sidebarTop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 22px;
+  padding: 16px 10px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  position: relative;
 }
 
-/* subtle hover scale */
-.adminLogo:hover{
-  transform:scale(1.05);
+.adminLogo {
+  width: 140px;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 18px rgba(226,172,90,.35));
+  transition: .3s;
+}
+.adminLogo:hover { transform: scale(1.04); }
+
+.adminTitle {
+  margin-top: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  color: #e2ac5a;
+  letter-spacing: .8px;
+  font-weight: 700;
+  text-align: center;
+}
+.adminSub {
+  font-size: 10px;
+  color: rgba(255,255,255,.28);
+  margin-top: 3px;
+  letter-spacing: .3px;
 }
 
-/* Admin text */
-.adminTitle{
-  margin-top:6px;
-  font-size:15px;
-  color:#cbd5f5;
-  letter-spacing:2px;
-  font-weight:700;
-  text-align:center;
-}
-
-/* Sidebar links */
+/* NAV LINKS */
 .sidebar a {
   text-decoration: none;
-  color: #cbd5f5;
-  padding: 10px;
-  border-radius: 8px;
-  transition: 0.3s;
+  color: rgba(255,255,255,.5);
+  padding: 10px 13px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  transition: all .2s;
+  white-space: nowrap;
+  letter-spacing: .1px;
 }
-
 .sidebar a:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: rgba(255,255,255,.05);
+  color: rgba(255,255,255,.85);
+  padding-left: 17px;
 }
-
 .sidebar a.active {
-  background: #6366f1;
-  color: white;
-  box-shadow: 0 0 12px rgba(99,102,241,0.4);
+  background: linear-gradient(135deg, rgba(226,172,90,.13), rgba(255,140,0,.07));
+  color: #e2ac5a;
+  border-left: 2px solid #e2ac5a;
+  border-radius: 0 10px 10px 0;
+  padding-left: 11px;
+  font-weight: 600;
 }
 
-/* Logout button */
+.sidebar a .nav-icon {
+  font-size: 15px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* LOGOUT */
 .logoutBtn {
   margin-top: auto;
-  padding: 10px;
-  border: none;
-  background: #ef4444;
-  color: white;
-  border-radius: 8px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255,100,100,.18);
+  border-radius: 10px;
+  background: rgba(255,80,80,.06);
+  color: #ff8585;
   cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all .2s;
+  letter-spacing: .3px;
+}
+.logoutBtn:hover {
+  background: rgba(255,80,80,.14);
+  border-color: rgba(255,100,100,.32);
 }
 
-.logoutBtn:hover{
-  background:#dc2626;
-}
-
+/* ─── CONTENT ─────────────────────────────────────────────── */
 .content {
   flex: 1;
-  padding: 25px;
+  min-width: 0;
+  padding: 28px 30px;
   overflow-y: auto;
+  overflow-x: hidden;
+  background: #060610;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.08) transparent;
+}
+.content::-webkit-scrollbar { width: 5px; }
+.content::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 10px; }
+
+/* ─── PAGE TITLE ─────────────────────────────────────────── */
+.admin-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  background: linear-gradient(90deg, #e2ac5a 0%, #f9d98a 50%, #ffe4a0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+/* ─── CARD ───────────────────────────────────────────────── */
+.admin-card {
+  background: rgba(255,255,255,.022);
+  border: 1px solid rgba(255,255,255,.07);
+  padding: 22px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.admin-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(226,172,90,.2), transparent);
+}
+
+.admin-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,.45);
+  letter-spacing: .5px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+/* ─── TABLE ──────────────────────────────────────────────── */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table thead tr {
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.admin-table th {
+  padding: 11px 16px;
+  text-align: left;
+  color: rgba(255,255,255,.35);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.admin-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: 13.5px;
+  color: rgba(255,255,255,.75);
+  transition: .15s;
+}
+
+.admin-table tbody tr {
+  transition: background .15s;
+}
+.admin-table tbody tr:hover td {
+  background: rgba(226,172,90,.04);
+  color: rgba(255,255,255,.9);
+}
+.admin-table tbody tr:last-child td { border-bottom: none; }
+
+/* ID cell style */
+.admin-table td:first-child {
+  color: rgba(255,255,255,.25);
+  font-size: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+}
+
+/* Email cell */
+.admin-table td.email-cell {
+  color: rgba(160,180,255,.65);
+  font-size: 12.5px;
+}
+
+/* ─── BADGES ─────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+.badge-blue   { background: rgba(96,164,255,.12); color: #7ec3ff; border: 1px solid rgba(96,164,255,.2); }
+.badge-green  { background: rgba(52,211,153,.12); color: #6ee7b7; border: 1px solid rgba(52,211,153,.2); }
+.badge-gold   { background: rgba(226,172,90,.12); color: #e2ac5a; border: 1px solid rgba(226,172,90,.2); }
+.badge-purple { background: rgba(167,139,250,.12); color: #c4b5fd; border: 1px solid rgba(167,139,250,.2); }
+.badge-red    { background: rgba(252,165,165,.10); color: #fca5a5; border: 1px solid rgba(252,165,165,.18); }
+
+/* ─── DELETE BUTTON ──────────────────────────────────────── */
+.delete-btn {
+  background: transparent;
+  border: 1px solid rgba(255,100,100,.22);
+  padding: 6px 14px;
+  border-radius: 8px;
+  color: #ff8585;
+  cursor: pointer;
+  font-size: 11.5px;
+  font-weight: 600;
+  transition: all .2s;
+  letter-spacing: .2px;
+}
+.delete-btn:hover {
+  background: rgba(255,80,80,.12);
+  border-color: rgba(255,100,100,.4);
+  transform: scale(1.04);
+}
+
+/* ─── FORM ROW ───────────────────────────────────────────── */
+.form-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.form-row input,
+.form-row select {
+  flex: 1;
+  min-width: 120px;
+  padding: 10px 13px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.09);
+  background: rgba(255,255,255,.04);
+  color: #e0e8ff;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: all .2s;
+}
+.form-row input:focus,
+.form-row select:focus {
+  border-color: rgba(226,172,90,.5);
+  background: rgba(226,172,90,.04);
+  box-shadow: 0 0 0 3px rgba(226,172,90,.06);
+}
+.form-row input::placeholder { color: rgba(255,255,255,.22); }
+.form-row select option { background: #0d0f1e; color: #e0e8ff; }
+
+/* ─── ADD BUTTON ─────────────────────────────────────────── */
+.add-btn {
+  background: linear-gradient(135deg, #e2ac5a 0%, #f5c97a 100%);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #1a0e00;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: all .2s;
+  white-space: nowrap;
+  letter-spacing: .2px;
+}
+.add-btn:hover {
+  transform: scale(1.04);
+  filter: brightness(1.08);
+  box-shadow: 0 4px 18px rgba(226,172,90,.3);
+}
+
+/* ─── EMPTY STATE ────────────────────────────────────────── */
+.admin-table td[colspan] {
+  text-align: center;
+  padding: 32px;
+  color: rgba(255,255,255,.2);
+  font-size: 13px;
+}
+
+/* ─── DASHBOARD ──────────────────────────────────────────── */
+.dashWrapper { padding: 4px; }
+
+.dashTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  background: linear-gradient(90deg, #e2ac5a, #f5c97a, #ffe9a3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.statCard {
+  border-radius: 16px;
+  padding: 20px 18px;
+  border: 1px solid;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: cardIn .5s ease both;
+  transition: transform .25s, box-shadow .25s;
+}
+.statCard::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.statCard:hover { transform: translateY(-5px); }
+
+.statCard.teal   { background: rgba(0,245,196,.04);  border-color: rgba(0,245,196,.15);  animation-delay:.04s; }
+.statCard.blue   { background: rgba(96,180,255,.04); border-color: rgba(96,180,255,.15); animation-delay:.09s; }
+.statCard.gold   { background: rgba(226,172,90,.04); border-color: rgba(226,172,90,.15); animation-delay:.14s; }
+.statCard.red    { background: rgba(255,107,107,.04);border-color: rgba(255,107,107,.15);animation-delay:.19s; }
+
+.statCard:hover.teal  { box-shadow: 0 14px 32px rgba(0,245,196,.08); }
+.statCard:hover.blue  { box-shadow: 0 14px 32px rgba(96,180,255,.08); }
+.statCard:hover.gold  { box-shadow: 0 14px 32px rgba(226,172,90,.10); }
+.statCard:hover.red   { box-shadow: 0 14px 32px rgba(255,107,107,.08); }
+
+.statLabel {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.statVal { font-size: 32px; font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
+.statCard.teal .statVal { color: #00f5c4; }
+.statCard.blue .statVal { color: #60b4ff; }
+.statCard.gold .statVal { color: #e2ac5a; }
+.statCard.red  .statVal { color: #ff6b6b; }
+
+.chartCard {
+  background: rgba(255,255,255,.022);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 16px;
+  padding: 22px;
+}
+.chartTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 18px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* ─── ADMIN PAGE WRAPPER ─────────────────────────────────── */
+.admin-page {
+  padding: 4px;
+  animation: fadeUp .35s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

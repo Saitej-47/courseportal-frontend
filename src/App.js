@@ -22,6 +22,7 @@ function App() {
       <Routes>
         {/* ✅ Student routes */}
         <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<StudentDashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/student" element={<StudentDashboard />} />
         <Route path="/courses" element={<Courses />} />
@@ -30,7 +31,7 @@ function App() {
         <Route path="/schedule" element={<Schedule />} />
 
         {/* ✅ Admin login */}
-        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
 
         {/* ✅ Admin panel routes */}
         <Route path="/admin/*" element={<AdminLayout />}>

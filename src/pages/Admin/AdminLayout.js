@@ -5,38 +5,38 @@ import logo from "../../assets/logo.png";
 function AdminLayout() {
   const navigate = useNavigate();
 
-  const logout = () => {
-    localStorage.removeItem("admin");
-    navigate("/admin");
-  };
+const logout = () => {
+  localStorage.removeItem("admin");
+  navigate("/admin/login"); // ← correct
+};
+
+  const navItems = [
+    { to: "/admin/dashboard",   icon: "🏠", label: "Dashboard"   },
+    { to: "/admin/students",    icon: "👥", label: "Students"    },
+    { to: "/admin/courses",     icon: "📚", label: "Courses"     },
+    { to: "/admin/faculty",     icon: "👨‍🏫", label: "Faculty"     },
+    { to: "/admin/enrollments", icon: "📋", label: "Enrollments" },
+  ];
 
   return (
     <div className="admin-container">
-      {/* Sidebar */}
       <div className="sidebar">
-
-        {/* ⭐ Centered Logo (student style) */}
         <div className="sidebarTop">
-  <img src={logo} alt="logo" className="adminLogo" />
+          <img src={logo} alt="logo" className="adminLogo" />
+          <h2 className="adminTitle">Admin Panel</h2>
+          <p className="adminSub">Management Console</p>
+        </div>
 
-  <div className="adminText">
-    <h2>Admin Panel</h2>
-    <p>Management Console</p>
-  </div>
-</div>
+        {navItems.map((item) => (
+          <NavLink key={item.to} to={item.to}>
+            <span className="nav-icon">{item.icon}</span>
+            {item.label}
+          </NavLink>
+        ))}
 
-        <NavLink to="/admin/dashboard">Dashboard</NavLink>
-        <NavLink to="/admin/students">Students</NavLink>
-        <NavLink to="/admin/courses">Courses</NavLink>
-        <NavLink to="/admin/faculty">Faculty</NavLink>
-        <NavLink to="/admin/enrollments">Enrollments</NavLink>
-
-        <button className="logoutBtn" onClick={logout}>
-          Logout
-        </button>
+        <button className="logoutBtn" onClick={logout}>→ Logout</button>
       </div>
 
-      {/* Content */}
       <div className="content">
         <Outlet />
       </div>
