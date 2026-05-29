@@ -32,7 +32,7 @@ function Timetable() {
 
   useEffect(() => {
     const id = localStorage.getItem("studentId");
-    axios.get(`http://localhost:8080/enroll/student/${id}/courses`)
+    axios.get(`${process.env.REACT_APP_API_URL}/anything/enroll/student/${id}/courses`)
       .then(res => {
         setSlots(res.data);
         const map = {};
@@ -44,7 +44,7 @@ function Timetable() {
       })
       .catch(() => console.log("Timetable fetch error"));
     if (id) {
-      axios.get(`http://localhost:8080/student/${id}`)
+      axios.get(`${process.env.REACT_APP_API_URL}/anything/student/${id}`)
         .then(res => setStudent(res.data))
         .catch(() => {});
     }

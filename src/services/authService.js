@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:8080/auth";
+const API = `${process.env.REACT_APP_API_URL}/anything/auth`;
 
 export const registerUser = (data) => {
     return axios.post(`${API}/register`, data);

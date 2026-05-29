@@ -11,7 +11,7 @@ function ManageFaculty() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/courses/all")
+      .get(`${process.env.REACT_APP_API_URL}/anything/courses/all`)
       .then((res) => {
         const seen = new Set();
         const unique = [];

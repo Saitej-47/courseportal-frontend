@@ -13,7 +13,7 @@ function Login() {
     e.preventDefault();
     if (!email || !password) { alert("Enter email & password"); return; }
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", { email, password });
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, { email, password });
       const student = response.data;
       localStorage.setItem("studentId", student.id);
       localStorage.setItem("role", student.role);
@@ -31,28 +31,23 @@ function Login() {
       <div className="o2"></div>
       <div className="o3"></div>
       <div className="o4"></div>
-
       <div className="scan-line"></div>
-
       <div className="corner-tl"></div>
       <div className="corner-tr"></div>
       <div className="corner-bl"></div>
       <div className="corner-br"></div>
-
       <div className="dots-left">
         {[...Array(8)].map((_, i) => <div key={i} className="dot"></div>)}
       </div>
       <div className="dots-right">
         {[...Array(8)].map((_, i) => <div key={i} className="dot"></div>)}
       </div>
-
       <div className="ring ring1"></div>
       <div className="ring ring2"></div>
       <div className="ring ring3"></div>
       <div className="ring ring4"></div>
       <div className="ring ring5"></div>
       <div className="ring ring6"></div>
-
       {[...Array(12)].map((_, i) => (
         <div key={i} className="particle" style={{
           left: `${(i * 8.3) % 100}%`,
@@ -64,8 +59,6 @@ function Login() {
           bottom: '-10px'
         }}></div>
       ))}
-
-      {/* ASTRONAUT LEFT */}
       <div className="astronaut">
         <svg width="110" height="150" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg">
           <ellipse cx="60" cy="100" rx="32" ry="38" fill="#1e2a4a" stroke="rgba(0,245,196,.4)" strokeWidth="1.5"/>
@@ -88,8 +81,6 @@ function Login() {
           <circle cx="85" cy="45" r="3" fill="#0d1628" stroke="rgba(0,245,196,.4)" strokeWidth="1"/>
         </svg>
       </div>
-
-      {/* PLANET RIGHT */}
       <div className="planet">
         <svg width="110" height="110" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="50" cy="50" r="35" fill="url(#planetGrad)"/>
@@ -107,11 +98,7 @@ function Login() {
           </defs>
         </svg>
       </div>
-
-      {/* ORBIT RING */}
       <div className="orbit-ring"></div>
-
-      {/* TWINKLING STARS */}
       <div className="stars-container">
         {[
           {x:8,y:12,s:2,d:0},{x:18,y:6,s:1.5,d:.5},{x:84,y:10,s:2,d:1},
@@ -129,14 +116,11 @@ function Login() {
           }}></div>
         ))}
       </div>
-
       <div className="login-center">
         <img src={logo} alt="SCP Portal" className="portal-logo" />
-
         <div className="glass-card">
           <h2>Welcome Back</h2>
           <div className="sub">Sign in to your account</div>
-
           <form onSubmit={handleLogin}>
             <input
               type="email"
@@ -150,9 +134,7 @@ function Login() {
             />
             <button type="submit" className="login-btn">Login →</button>
           </form>
-
           <div className="divider"><div></div><span>or</span><div></div></div>
-
           <p className="register-text">
             No account?{" "}
             <span className="register-link" onClick={() => navigate("/register")}>

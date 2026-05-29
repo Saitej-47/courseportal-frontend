@@ -30,16 +30,16 @@ function Registration() {
   const location = useLocation();
 
   useEffect(() => {
-    axios.get("http://localhost:8080/courses/all")
+    axios.get(`${process.env.REACT_APP_API_URL}/courses/all`)
       .then(res => setCourses(res.data))
       .catch(() => console.log("Course fetch error"));
 
     const id = localStorage.getItem("studentId");
     if (id) {
-      axios.get(`http://localhost:8080/enroll/${id}`)
+      axios.get(`${process.env.REACT_APP_API_URL}/enroll/${id}`)
         .then(res => setRegistered(res.data.map(e => e.courseId)))
         .catch(() => {});
-      axios.get(`http://localhost:8080/student/${id}`)
+      axios.get(`${process.env.REACT_APP_API_URL}/student/${id}`)
         .then(res => setStudent(res.data))
         .catch(() => {});
     }
@@ -59,7 +59,7 @@ function Registration() {
     if (!selectedSlots[courseName]) return alert("Select faculty first");
     const studentId = localStorage.getItem("studentId");
     const courseId = selectedSlots[courseName];
-    axios.post(`http://localhost:8080/enroll/${studentId}/${courseId}`)
+    axios.post(`${process.env.REACT_APP_API_URL}/enroll/${studentId}/${courseId}`)
       .then(() => {
         setRegistered([...registered, parseInt(courseId)]);
         alert(`${courseName} Registered ✅`);
@@ -113,7 +113,6 @@ function Registration() {
                 </div>
                 <h3>{name}</h3>
                 <p className="course-desc">{meta.desc}</p>
-
                 <select
                   className="faculty-select"
                   disabled={isRegistered}
@@ -127,7 +126,6 @@ function Registration() {
                     </option>
                   ))}
                 </select>
-
                 {isRegistered ? (
                   <button className="reg-btn done" disabled>Registered ✅</button>
                 ) : (

@@ -14,7 +14,7 @@ function ManageCourses() {
 
   const fetchCourses = () => {
     axios
-      .get("http://localhost:8080/courses/all")
+      .get(`${process.env.REACT_APP_API_URL}/anything/courses/all`)
       .then((res) => setCourses(res.data))
       .catch((err) => console.log(err));
   };
@@ -30,7 +30,7 @@ function ManageCourses() {
     if (!form.startTime.trim() || !form.endTime.trim()) return alert("Enter time");
 
     axios
-      .post("http://localhost:8080/courses/add", {
+      .post(`${process.env.REACT_APP_API_URL}/anything/courses/add`, {
         courseName: form.courseName,
         facultyName: form.facultyName,
         day: form.day,
@@ -48,7 +48,7 @@ function ManageCourses() {
   const handleDelete = (id) => {
     if (window.confirm("Delete this course?")) {
       axios
-        .delete(`http://localhost:8080/courses/${id}`)
+        .delete(`${process.env.REACT_APP_API_URL}/anything/courses/${id}`)
         .then(() => { alert("Deleted ✅"); fetchCourses(); })
         .catch((err) => console.log(err));
     }

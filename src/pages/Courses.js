@@ -28,12 +28,12 @@ function Courses() {
   const location = useLocation();
 
   useEffect(() => {
-    axios.get("http://localhost:8080/courses/all")
+    axios.get(`${process.env.REACT_APP_API_URL}/anything/courses/all`)
       .then(res => setCourses(res.data))
       .catch(() => console.log("Course fetch error"));
     const id = localStorage.getItem("studentId");
     if (id) {
-      axios.get(`http://localhost:8080/student/${id}`)
+      axios.get(`${process.env.REACT_APP_API_URL}/anything/student/${id}`)
         .then(res => setStudent(res.data))
         .catch(() => {});
     }

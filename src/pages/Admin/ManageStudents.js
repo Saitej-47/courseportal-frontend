@@ -7,7 +7,7 @@ function ManageStudents() {
 
   const fetchStudents = () => {
     axios
-      .get("http://localhost:8080/student/all")
+      .get(`${process.env.REACT_APP_API_URL}/anything/student/all`)
       .then((res) => setStudents(res.data))
       .catch((err) => console.log(err));
   };
@@ -17,7 +17,7 @@ function ManageStudents() {
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this student?")) {
       axios
-        .delete(`http://localhost:8080/student/${id}`)
+        .delete(`${process.env.REACT_APP_API_URL}/anything/student/${id}`)
         .then(() => {
           alert("Student deleted ✅");
           fetchStudents();

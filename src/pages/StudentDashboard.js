@@ -13,10 +13,10 @@ function StudentDashboard() {
   useEffect(() => {
     const id = localStorage.getItem("studentId");
     if (!id) { navigate("/"); return; }
-    axios.get(`http://localhost:8080/student/${id}`)
+    axios.get(`${process.env.REACT_APP_API_URL}/anything/student/${id}`)
       .then(res => setStudent(res.data))
       .catch(() => console.log("Student fetch error"));
-    axios.get(`http://localhost:8080/enroll/${id}`)
+    axios.get(`${process.env.REACT_APP_API_URL}/anything/enroll/${id}`)
       .then(res => setEnrollments(res.data))
       .catch(() => console.log("Enrollment fetch error"));
   }, [navigate]);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "./Schedule.css";
 import logo from "../assets/logo.png";
@@ -34,24 +34,24 @@ function Schedule() {
     return `${h}:${minute} ${ampm}`;
   };
 
-  const fetchTasks = () => {
-    axios.get(`http://localhost:8080/schedule/${studentId}`)
+  const fetchTasks = useCallback(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/schedule/${studentId}`)
       .then(res => setTasks(res.data))
       .catch(() => console.log("Fetch schedule error"));
-  };
+  }, [studentId]);
 
   useEffect(() => {
     fetchTasks();
     if (studentId) {
-      axios.get(`http://localhost:8080/student/${studentId}`)
+      axios.get(`${process.env.REACT_APP_API_URL}/student/${studentId}`)
         .then(res => setStudent(res.data))
         .catch(() => {});
     }
-  }, [studentId]);
+  }, [studentId, fetchTasks]);
 
   const addTask = () => {
     if (!title || !day || !start || !end) { alert("Fill all fields"); return; }
-    axios.post("http://localhost:8080/schedule", {
+    axios.post(`${process.env.REACT_APP_API_URL}/schedule`, {
       studentId, title, day, startTime: start, endTime: end
     }).then(() => {
       setTitle(""); setDay(""); setStart(""); setEnd("");
@@ -60,7 +60,7 @@ function Schedule() {
   };
 
   const del = (id) => {
-    axios.delete(`http://localhost:8080/schedule/${id}`).then(fetchTasks);
+    axios.delete(`${process.env.REACT_APP_API_URL}/schedule/${id}`).then(fetchTasks);
   };
 
   return (
