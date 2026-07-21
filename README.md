@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+SCP — Student Course Portal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application for students to browse courses, register for classes, and build their personal timetable — with a separate admin panel for managing course offerings.
 
-## Available Scripts
+Live App: courseportal-frontend-fuup.vercel.app Live API: courseportal-backend-2y3f.onrender.com
 
-In the project directory, you can run:
+Repositories: Frontend · Backend
 
-### `npm start`
+Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Student side
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Register and log in as a student
+Browse all available courses, grouped by subject, with faculty/day/time slots
+Register for a course section
+Auto-generated weekly timetable based on registered courses
+Student dashboard with profile info
 
-### `npm test`
+Admin side
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Separate admin login (restricted access)
+Add new courses with faculty, day, and time slot
+View all courses in the system
+Tech Stack
+Layer	Technology
+Frontend	React (Create React App), React Router, Axios
+Backend	Spring Boot 4 (Java 17), Spring Data JPA, Hibernate
+Database	MySQL 8.4
+Auth	Basic email/password (student + admin)
+Architecture
+┌─────────────────┐        HTTPS         ┌──────────────────┐        JDBC        ┌─────────────┐
+│  React Frontend │ ───────────────────▶ │  Spring Boot API │ ──────────────────▶│  MySQL DB   │
+│    (Vercel)     │ ◀─────────────────── │     (Render)      │ ◀──────────────────│   (Aiven)   │
+└─────────────────┘      JSON / REST      └──────────────────┘                     └─────────────┘
+Deployment
 
-### `npm run build`
+This project is deployed across three free-tier services:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Service	Platform	Purpose
+Frontend	Vercel	Hosts the React build, auto-deploys on push to main
+Backend	Render	Runs the Spring Boot app in a Docker container
+Database	Aiven	Managed, always-free MySQL instance
+Environment variables
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Backend (Render)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+DB_URL=jdbc:mysql://<aiven-host>:<port>/<database>?useSSL=true&requireSSL=true&serverTimezone=UTC
+DB_USER=<aiven-username>
+DB_PASS=<aiven-password>
+FRONTEND_URL=https://courseportal-frontend-fuup.vercel.app
 
-### `npm run eject`
+Frontend (Vercel)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+REACT_APP_API_URL=https://courseportal-backend-2y3f.onrender.com
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Note: Render's free tier spins down after 15 minutes of inactivity. The first request after idling can take 30–60 seconds while it wakes back up — this is expected, not a bug.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Redeploying
+Frontend: push to main on courseportal-frontend → Vercel auto-deploys
+Backend: push to main on courseportal-backend → Render auto-deploys using the Dockerfile
+Running Locally
+Prerequisites
+Node.js (for the frontend)
+Java 17 + Maven (for the backend)
+MySQL running locally
+Backend
+bash
+cd courseportal-backend
+# set local DB credentials as environment variables, or edit application.properties directly
+./mvnw spring-boot:run
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Runs on http://localhost:8080
 
-## Learn More
+Frontend
+bash
+cd courseportal-frontend
+npm install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Create a .env file in the project root:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+REACT_APP_API_URL=http://localhost:8080
 
-### Code Splitting
+Then:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+bash
+npm start
 
-### Analyzing the Bundle Size
+Runs on http://localhost:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Project Structure
+courseportal-backend/
+├── controller/      # REST endpoints (Course, Student, Enrollment, Admin, Auth, Schedule)
+├── service/         # Business logic
+├── repository/       # Spring Data JPA repositories
+├── entity/           # JPA entities (Course, Student, Faculty, Enrollment, Schedule)
+├── config/           # CORS configuration
+└── CourseportalApplication.java
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+courseportal-frontend/
+├── src/
+│   ├── pages/         # Route-level components (Courses, Registration, Timetable, etc.)
+│   │   └── Admin/     # Admin panel pages
+│   ├── services/      # API service wrappers
+│   └── App.js          # Route definitions
+API Overview
+Method	Endpoint	Description
+POST	/auth/register	Student registration
+POST	/auth/login	Student login
+POST	/admin/login	Admin login
+GET	/courses/all	List all course sections
+POST	/courses/add	Add a new course section (admin)
+GET	/student/{id}	Get student profile
+POST	/enroll/{studentId}/{courseId}	Register a student for a course
+GET	/enroll/student/{id}/courses	Get a student's registered courses (for timetable)
+Admin Access
+Email: admin@gmail.com
+Password: admin123
