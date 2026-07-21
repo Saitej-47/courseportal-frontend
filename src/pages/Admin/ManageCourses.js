@@ -2,132 +2,133 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Admin.css";
 
+const API = `${process.env.REACT_APP_API_URL}/courses`;
+
 function ManageCourses() {
   const [courses, setCourses] = useState([]);
   const [form, setForm] = useState({
     courseName: "",
-    facultyName: "",
+    faculty: "",
     day: "",
     startTime: "",
     endTime: "",
   });
+  const [error, setError] = useState("");
 
-  const fetchCourses = () => {
+  const loadCourses = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/anything/courses/all`)
+      .get(`${API}/all`)
       .then((res) => setCourses(res.data))
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => { fetchCourses(); }, []);
+  useEffect(() => {
+    loadCourses();
+  }, []);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const handleAdd = () => {
-    if (!form.courseName.trim())  return alert("Enter course name");
-    if (!form.facultyName.trim()) return alert("Enter faculty name");
-    if (!form.day.trim())         return alert("Select a day");
-    if (!form.startTime.trim() || !form.endTime.trim()) return alert("Enter time");
+  const handleAddCourse = (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!form.courseName || !form.faculty || !form.day || !form.startTime || !form.endTime) {
+      setError("Please fill in all fields.");
+      return;
+    }
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/anything/courses/add`, {
-        courseName: form.courseName,
-        facultyName: form.facultyName,
-        day: form.day,
-        startTime: form.startTime,
-        endTime: form.endTime,
-      })
+      .post(`${API}/add`, form)
       .then(() => {
-        alert("Course added ✅");
-        setForm({ courseName: "", facultyName: "", day: "", startTime: "", endTime: "" });
-        fetchCourses();
+        setForm({ courseName: "", faculty: "", day: "", startTime: "", endTime: "" });
+        loadCourses();
       })
-      .catch((err) => console.log(err));
-  };
-
-  const handleDelete = (id) => {
-    if (window.confirm("Delete this course?")) {
-      axios
-        .delete(`${process.env.REACT_APP_API_URL}/anything/courses/${id}`)
-        .then(() => { alert("Deleted ✅"); fetchCourses(); })
-        .catch((err) => console.log(err));
-    }
-  };
-
-  const dayColors = {
-    Monday: "badge-blue", Tuesday: "badge-purple", Wednesday: "badge-gold",
-    Thursday: "badge-green", Friday: "badge-red",
-    Mon: "badge-blue", Tue: "badge-purple", Wed: "badge-gold",
-    Thu: "badge-green", Fri: "badge-red",
+      .catch((err) => {
+        console.log(err);
+        setError("Failed to add course. Check backend logs.");
+      });
   };
 
   return (
     <div className="admin-page">
-      <h2 className="admin-title">📚 Manage Courses</h2>
+      <h2 className="admin-title">Manage Courses</h2>
 
-      {/* ADD COURSE FORM */}
-      <div className="admin-card" style={{ marginBottom: "20px" }}>
-        <h3>Add New Course</h3>
-        <div className="form-row">
-          <input
-            type="text" name="courseName" placeholder="Course Name"
-            value={form.courseName} onChange={handleChange}
-          />
-          <input
-            type="text" name="facultyName" placeholder="Faculty Name"
-            value={form.facultyName} onChange={handleChange}
-          />
-          <select name="day" value={form.day} onChange={handleChange}>
-            <option value="">Select Day</option>
-            <option>Monday</option>
-            <option>Tuesday</option>
-            <option>Wednesday</option>
-            <option>Thursday</option>
-            <option>Friday</option>
-          </select>
-          <input type="time" name="startTime" value={form.startTime} onChange={handleChange} />
-          <input type="time" name="endTime"   value={form.endTime}   onChange={handleChange} />
-          <button className="add-btn" onClick={handleAdd}>Add</button>
-        </div>
-      </div>
+      <form
+        onSubmit={handleAddCourse}
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "10px",
+          margin: "16px 0 24px",
+          background: "rgba(255,255,255,0.05)",
+          padding: "16px",
+          borderRadius: "12px",
+        }}
+      >
+        <input
+          name="courseName"
+          placeholder="Course Name (e.g. Data Structures)"
+          value={form.courseName}
+          onChange={handleChange}
+        />
+        <input
+          name="faculty"
+          placeholder="Faculty Name"
+          value={form.faculty}
+          onChange={handleChange}
+        />
+        <select name="day" value={form.day} onChange={handleChange}>
+          <option value="">Select Day</option>
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+        </select>
+        <input
+          type="time"
+          name="startTime"
+          value={form.startTime}
+          onChange={handleChange}
+        />
+        <input
+          type="time"
+          name="endTime"
+          value={form.endTime}
+          onChange={handleChange}
+        />
+        <button type="submit" className="admin-login-btn">
+          Add Course
+        </button>
+      </form>
 
-      {/* COURSES TABLE */}
-      <div className="admin-card">
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Course Name</th>
-              <th>Faculty</th>
-              <th>Day</th>
-              <th>Time</th>
-              <th>Actions</th>
+      {error && <p style={{ color: "#f87171" }}>{error}</p>}
+
+      <table className="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Faculty</th>
+            <th>Day</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {courses.map((c) => (
+            <tr key={c.id}>
+              <td>{c.id}</td>
+              <td>{c.courseName}</td>
+              <td>{c.faculty}</td>
+              <td>{c.day}</td>
+              <td>{c.startTime}-{c.endTime}</td>
             </tr>
-          </thead>
-          <tbody>
-            {courses.length > 0 ? (
-              courses.map((c) => (
-                <tr key={c.id}>
-                  <td>{c.id}</td>
-                  <td style={{ fontWeight: 500, color: "rgba(255,255,255,.88)" }}>{c.courseName}</td>
-                  <td style={{ color: "rgba(167,139,250,.85)" }}>{c.faculty}</td>
-                  <td>
-                    <span className={`badge ${dayColors[c.day] || "badge-blue"}`}>{c.day}</span>
-                  </td>
-                  <td style={{ color: "rgba(255,255,255,.45)", fontFamily: "'Space Grotesk', sans-serif", fontSize: 12 }}>
-                    {c.startTime} – {c.endTime}
-                  </td>
-                  <td>
-                    <button className="delete-btn" onClick={() => handleDelete(c.id)}>Delete</button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr><td colSpan="6">No courses found</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

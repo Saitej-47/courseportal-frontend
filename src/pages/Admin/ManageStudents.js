@@ -7,7 +7,7 @@ function ManageStudents() {
 
   const fetchStudents = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/anything/student/all`)
+      .get(`${process.env.REACT_APP_API_URL}/student/all`)
       .then((res) => setStudents(res.data))
       .catch((err) => console.log(err));
   };

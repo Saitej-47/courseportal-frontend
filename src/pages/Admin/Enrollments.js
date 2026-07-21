@@ -10,7 +10,7 @@ function Enrollments() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/anything/enroll/all-details`)
+      .get(`${process.env.REACT_APP_API_URL}/enroll/all-details`)
       .then((res) => setEnrollments(res.data))
       .catch((err) => console.log(err));
   }, []);

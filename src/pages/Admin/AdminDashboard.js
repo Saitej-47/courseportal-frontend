@@ -39,10 +39,10 @@ function AdminDashboard() {
   const [facultyData, setFacultyData] = useState([]);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/anything/api/admin/stats`)
+    axios.get(`${process.env.REACT_APP_API_URL}/api/admin/stats`)
       .then(res => setStats(res.data))
       .catch(err => console.error("Stats error:", err));
-    axios.get(`${process.env.REACT_APP_API_URL}/anything/enroll/faculty-students`)
+    axios.get(`${process.env.REACT_APP_API_URL}/enroll/faculty-students`)
       .then(res => setFacultyData(res.data))
       .catch(err => console.error(err));
   }, []);
