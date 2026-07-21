@@ -2,8 +2,7 @@ SCP — Student Course Portal
 
 A full-stack web application for students to browse courses, register for classes, and build their personal timetable — with a separate admin panel for managing course offerings.
 
-Live App: courseportal-frontend-fuup.vercel.app Live API: courseportal-backend-2y3f.onrender.com
-
+**Live App:** [courseportal-frontend-fuup.vercel.app](https://courseportal-frontend-fuup.vercel.app) **Live API:** [courseportal-backend-2y3f.onrender.com](https://courseportal-backend-2y3f.onrender.com) **Repositories:** [Frontend](https://github.com/Saitej-47/courseportal-frontend) · [Backend](https://github.com/Saitej-47/courseportal-backend)
 Repositories: Frontend · Backend
 
 Features
